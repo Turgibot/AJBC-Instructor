@@ -1,4 +1,4 @@
-package core.exam1;
+package solutions.exams.week1;
 
 public class Runner {
 	/**

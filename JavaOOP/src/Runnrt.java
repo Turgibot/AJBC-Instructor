@@ -1,6 +1,5 @@
-package core.variables;
 
-public class Runner {
+public class Runnrt {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
