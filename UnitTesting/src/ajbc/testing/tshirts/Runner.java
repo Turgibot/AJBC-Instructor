@@ -10,6 +10,7 @@ public class Runner {
 
 		for (TShirt tShirt : shirts) {
 			System.out.println(tShirt);
+			System.out.println(tShirt.calculateFinalPrice()+" is expensive: "+tShirt.isExpensive());
 			System.out.println("----------------------------");
 		}
 	}

@@ -2,11 +2,14 @@ package ajbc.testing.example1;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Examples for learning junit")
 class ExampleTests {
-	Book b ;
 	@Test
 	void test() {
 		fail("Not yet implemented");
@@ -23,14 +26,19 @@ class ExampleTests {
 		assertFalse(true);
 	}
 	
-	class Book{
-		int num;
+	@Test
+//	@Disabled
+	void checkObjNum() {
+		assertNotNull(null, "object is null");
+		assertEquals(1, 0, "1 is not zero");
 	}
 	
 	@Test
-//	@Disabled
-	void checkBookNum() {
-		assertNotNull(b, "Book b is null");
-		assertEquals(b.num, 0, "Book num is not zero");
+	void exceptionIsThrown() {
+		assertThrows(IOException.class, ()->throwException());
+	}
+	
+	void throwException() throws IOException{
+		throw new IOException();
 	}
 }

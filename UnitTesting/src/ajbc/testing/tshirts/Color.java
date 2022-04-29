@@ -44,10 +44,18 @@ public class Color {
 			this.blue = blue;
 	}
 
-	
-	
 	// methods
-	
+
+	public String getDominant() {
+		double max = Math.max(red, Math.max(green, blue));
+		if (max == red)
+			return "Red";
+		return max == green ? "Green" : "Blue";
+	}
+
+	public float[] normalized() {
+		return new float[] {(float)red/MAX, (float)green/MAX, (float)blue/MAX};
+	}
 	@Override
 	public String toString() {
 		return "Color [red=" + red + ", green=" + green + ", blue=" + blue + "]";

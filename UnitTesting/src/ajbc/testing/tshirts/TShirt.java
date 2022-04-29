@@ -4,11 +4,12 @@ public class TShirt {
 
 	// constants
 
-	private final static double FACTOR_MIN, FACTOR_MAX, BASE_PRICE_MIN;
+	private final static double FACTOR_MIN, FACTOR_MAX, BASE_PRICE_MIN, EXPENSIVE_PRICE;
 	static {
 		FACTOR_MIN = 0.1;
 		FACTOR_MAX = 1;
-		BASE_PRICE_MIN = 10;
+		BASE_PRICE_MIN = 3;
+		EXPENSIVE_PRICE = 10000;
 	}
 
 	// fields
@@ -61,10 +62,32 @@ public class TShirt {
 		else
 			this.basePrice = BASE_PRICE_MIN;
 	}
+	
+	
+	public Size getSize() {
+		return size;
+	}
+
+	public Design getDesign() {
+		return design;
+	}
+
+	public double getDemandFactor() {
+		return demandFactor;
+	}
+
+	public double getBasePrice() {
+		return basePrice;
+	}
+	
 	// methods
 
 	public double calculateFinalPrice() {
 		return (basePrice + design.getComplexity()) * design.calcArea() / demandFactor;
+	}
+	
+	public boolean isExpensive() {
+		return calculateFinalPrice()>=EXPENSIVE_PRICE;
 	}
 
 	@Override

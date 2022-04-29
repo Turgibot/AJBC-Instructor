@@ -62,15 +62,36 @@ public class Design {
 	public double calcArea() {
 		return width * height;
 	}
+	
+	//getters
+	
+	public double getWidth() {
+		return width;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public String getSlogan() {
+		return slogan;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public double getComplexity() {
+		return complexity;
+	}
+	
 
 	// methods
 	private void setColor(Color color) {
 		this.color = color;
 	}
 
-	public double getComplexity() {
-		return complexity;
-	}
+
 
 	@Override
 	public String toString() {
