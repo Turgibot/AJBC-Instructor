@@ -11,7 +11,7 @@ public class Color {
 
 	// fields
 
-	private short red;
+	protected short red;
 	private short green;
 	private short blue;
 

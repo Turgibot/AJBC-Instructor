@@ -17,11 +17,11 @@ public class Design {
 	}
 
 	// fields
-	private double width;
-	private double height;
-	private String slogan;
-	private Color color;
-	private double complexity;
+	protected double width;
+	protected double height;
+	protected String slogan;
+	protected Color color;
+	protected double complexity;
 
 	// constructors
 	public Design(double width, double height, String slogan, Color color, double complexity) {
@@ -37,31 +37,32 @@ public class Design {
 	}
 	// setters
 
-	private void setWidth(double width) {
+	protected void setWidth(double width) {
 		if (Utils.isInRange(width, WIDTH_MIN, WIDTH_MAX))
 			this.width = width;
 	}
 
-	private void setHeight(double height) {
+	protected void setHeight(double height) {
 		if (Utils.isInRange(height, HEIGHT_MIN, HEIGHT_MAX))
 			this.height = height;
 	}
 
-	private void setComplexity(double complexity) {
+	protected void setComplexity(double complexity) {
 		if (Utils.isInRange(complexity, COMPLEX_MIN, COMPLEX_MAX))
 			this.complexity = complexity;
 	}
 
-	private void setSlogan(String slogan) {
+	protected void setSlogan(String slogan) {
 		if (Utils.isLetterDigits(slogan))
 			this.slogan = slogan;
 		else
 			this.slogan = DEF_SLOGAN;
 	}
-
-	public double calcArea() {
-		return width * height;
+	
+	protected void setColor(Color color) {
+		this.color = color;
 	}
+
 	
 	//getters
 	
@@ -86,12 +87,14 @@ public class Design {
 	}
 	
 
+
+
 	// methods
-	private void setColor(Color color) {
-		this.color = color;
+	
+	public double calcArea() {
+		return width * height;
 	}
-
-
+	
 
 	@Override
 	public String toString() {

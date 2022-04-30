@@ -30,10 +30,7 @@ public class LifeCycleClassDemo {
 	@BeforeEach
 	public void beforeTesting() {
 		System.out.println("We can do something before each test");
-		System.out.println("Before reset x = %d y = %d".formatted(x,y));
-		x = 10;
-		y = 10;
-		System.out.println("After reset x = %d y = %d".formatted(x,y));
+		System.out.println(" x = %d y = %d".formatted(x,y));
 	}
 	
 	@Test

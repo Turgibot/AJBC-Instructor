@@ -14,10 +14,10 @@ public class TShirt {
 
 	// fields
 
-	private Size size;
-	private Design design;
-	private double demandFactor;
-	private double basePrice;
+	protected Size size;
+	protected Design design;
+	protected double demandFactor;
+	protected double basePrice;
 
 	// constructors
 
