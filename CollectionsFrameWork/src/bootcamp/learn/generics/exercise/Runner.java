@@ -44,6 +44,8 @@ public class Runner {
 	public static Student getBetterStudent(Service<Student> service1, Service<Student> service2) {
 		return service1.serviced.aveGrade >= service2.serviced.aveGrade ? service1.serviced : service2.serviced;
 	}
+	
+	
 
 	public static void serve(List<Service<Person>> services) {
 		for (Service<? extends Person> service : services) {
