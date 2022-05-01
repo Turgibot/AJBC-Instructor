@@ -49,7 +49,7 @@ public class ReaderWriterExample {
 
         try {
             // Creates a Writer using FileWriter
-            Writer output = new FileWriter("myFiles/output.txt");
+            Writer output = new FileWriter("myFiles/output.txt", true);
 
 
             // Writes a string to the file

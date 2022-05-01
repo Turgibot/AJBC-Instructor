@@ -10,7 +10,6 @@ public class PrintWriterExample {
 	try (PrintWriter printedFile = new PrintWriter("myFiles/output3.txt")){
 		
 		int age = 2;
-
 		printedFile.printf("I am %d years old.\n", age);
 		printedFile.println("The end!");
 	} catch (FileNotFoundException e) {
