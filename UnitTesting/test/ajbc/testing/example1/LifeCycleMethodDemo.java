@@ -15,6 +15,7 @@ public class LifeCycleMethodDemo {
 	private int x;
 	private int y;
 	private static String str = "Setting static vars";
+	
 	@BeforeAll
 	public static void resetValues() {
 		System.out.println("Before starting to test anything...");

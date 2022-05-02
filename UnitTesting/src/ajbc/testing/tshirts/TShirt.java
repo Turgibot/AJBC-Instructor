@@ -64,21 +64,6 @@ public class TShirt {
 	}
 	
 	
-	public Size getSize() {
-		return size;
-	}
-
-	public Design getDesign() {
-		return design;
-	}
-
-	public double getDemandFactor() {
-		return demandFactor;
-	}
-
-	public double getBasePrice() {
-		return basePrice;
-	}
 	
 	// methods
 

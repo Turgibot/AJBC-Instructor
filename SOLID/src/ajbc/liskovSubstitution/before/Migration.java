@@ -8,5 +8,11 @@ public class Migration {
 			duck.fly();
 		}
 	}
+	
+	public void quacking(Duck... ducks) {
+		for (Duck duck : ducks) {
+			duck.quack();
+		}
+	}
 
 }

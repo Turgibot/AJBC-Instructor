@@ -14,6 +14,8 @@ public class Utils {
 	}
 	
 	public static boolean isLetterDigits(String str) {
+		if(str==null)
+			return false;
 		str = str.replaceAll("\\s", "");
 		for (int i = 0; i < str.length(); i++) {
 			char ch = str.charAt(i);

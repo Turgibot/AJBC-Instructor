@@ -33,7 +33,7 @@ public class FileExample {
 		}
 
 		// File (or directory) with new name
-		File file2 = new File("newname");
+		File file2 = new File("newname.txt");
 		if (file2.exists())
 			throw new java.io.IOException("file exists");
 
