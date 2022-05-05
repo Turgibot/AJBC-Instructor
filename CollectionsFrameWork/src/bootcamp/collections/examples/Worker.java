@@ -50,6 +50,8 @@ class Worker implements Comparable<Worker> {
     }
 
     // Compare two Worker objects by their salary
+    
+    // this.compareTo(worker)
     @Override
     public int compareTo(Worker Worker) {
         if(this.getSalary() > Worker.getSalary()) {

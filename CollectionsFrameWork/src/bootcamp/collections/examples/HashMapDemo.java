@@ -170,7 +170,8 @@ public class HashMapDemo {
 		// -------------------------------------------------------------------//
         Map<Integer, Employee> employeesMap = new HashMap<>();
 
-        employeesMap.put(1001, new Employee(1001, "Michael", "Bengaluru"));
+        int id1 = 1001;
+        employeesMap.put(id1, new Employee(id1, "Michael", "Bengaluru"));
         employeesMap.put(1002, new Employee(1002, "David", "New York"));
         employeesMap.put(1003, new Employee(1003, "Jack", "Paris"));
 

@@ -28,18 +28,24 @@ public class Customer {
     }
 
     // Two customers are equal if their IDs are equal
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return id == customer.id;
-    }
+    
 
     @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Customer other = (Customer) obj;
+		return id == other.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 
     @Override
     public String toString() {

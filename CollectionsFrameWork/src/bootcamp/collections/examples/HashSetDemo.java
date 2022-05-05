@@ -165,7 +165,9 @@ public class HashSetDemo {
           HashSet will use the `equals()` & `hashCode()` implementations 
           of the Customer class to check for duplicates and ignore them
         */
-        customers.add(new Customer(101, "Shoshana"));
+        if(!customers.add(new Customer(101, "Shoshana"))) {
+        System.out.println("101 is already taken");	
+        }
 
         System.out.println(customers);
 	}

@@ -19,7 +19,7 @@ public class CandidatesSorterDemo {
 		Candidates.add(new Candidate(1010, "Michael", 100000.00, LocalDate.of(2010, 7, 10)));
 		Candidates.add(new Candidate(1004, "Chris", 95000.50, LocalDate.of(2017, 3, 19)));
 		Candidates.add(new Candidate(1015, "David", 134000.00, LocalDate.of(2017, 9, 28)));
-
+		System.out.println("------------------------");
 		System.out.println("Candidates (Before Sorting) : " + Candidates);
 
 		// This will use the `compareTo()` method of the `Candidate` class to compare two
@@ -27,7 +27,7 @@ public class CandidatesSorterDemo {
 		Collections.sort(Candidates);
 
 		System.out.println("\nCandidates (After Sorting) : " + Candidates);
-
+		System.out.println("------------------------");
 		// -------------------------------------------------------------------//
 		// sorting a List using different comparators
 		// -------------------------------------------------------------------//
@@ -41,7 +41,7 @@ public class CandidatesSorterDemo {
 
         System.out.println("Candidates : " + Candidates);
 
-        // Sort Candidates by Name
+        //Anonymous class - Sort Candidates by Name
         Comparator<Candidate> CandidateNameComparator = new Comparator<Candidate>() {
             @Override
             public int compare(Candidate c1, Candidate c2) {
