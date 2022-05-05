@@ -1,4 +1,4 @@
-package ajbc.patterens.singleton.classes;
+package ajbc.patterens.singleton;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

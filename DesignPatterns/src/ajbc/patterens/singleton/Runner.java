@@ -1,4 +1,4 @@
-package ajbc.patterens.singleton.classes;
+package ajbc.patterens.singleton;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

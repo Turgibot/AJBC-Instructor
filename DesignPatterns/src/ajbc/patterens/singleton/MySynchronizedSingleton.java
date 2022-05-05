@@ -1,4 +1,4 @@
-package ajbc.patterens.singleton.classes;
+package ajbc.patterens.singleton;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

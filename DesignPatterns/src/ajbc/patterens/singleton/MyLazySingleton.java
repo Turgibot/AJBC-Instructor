@@ -1,4 +1,4 @@
-package ajbc.patterens.singleton.classes;
+package ajbc.patterens.singleton;
 
 public final class MyLazySingleton {
 	
