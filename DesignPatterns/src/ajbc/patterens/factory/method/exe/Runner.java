@@ -1,8 +1,10 @@
-package ajbc.patterens.factory.method;
+package ajbc.patterens.factory.method.exe;
+
+import java.util.Scanner;
 
 public class Runner {
-	private static Dialog dialog;
-
+	private static ThemeFactory theme;
+	static Scanner sc = new Scanner(System.in);
 	public static void main(String[] args) {
 		configure();
 		runBusinessLogic();
@@ -14,10 +16,12 @@ public class Runner {
 	 * environment options.
 	 */
 	private static void configure() {
-		if (System.getProperty("os.name").equals("Windows 10")) {
-			dialog = new WindowsDialog();
+		System.out.println("Enter 1 for dark 2 for bright");
+		int selection = Integer.parseInt(sc.next());
+		if (selection == 1) {
+			theme = new DarkThemeFactory();
 		} else {
-			dialog = new HtmlDialog();
+			theme = new BrightThemeFactory();
 		}
 	}
 
@@ -27,6 +31,6 @@ public class Runner {
 	 * and what kind of product it returns.
 	 */
 	private static void runBusinessLogic() {
-		dialog.renderWindow();
+		theme.renderWindow();
 	}
 }

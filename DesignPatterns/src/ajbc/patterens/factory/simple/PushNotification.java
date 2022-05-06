@@ -1,4 +1,4 @@
-package ajbc.patterens.factory.nonono;
+package ajbc.patterens.factory.simple;
 
 public class PushNotification implements Notification{
 
