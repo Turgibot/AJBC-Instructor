@@ -6,11 +6,15 @@ package ajbc.patterns.builder;
  * being built.
  */
 public class Director {
-
+	private final int NUM_SEATS_SPORT=2,NUM_SEATS_CITY=2,NUM_SEATS_SUV=4;
+	private final double ENGINE_VOL_SPORT = 3.0d, MILAGE_SPORT=0d,
+						 ENGINE_VOL_CITY = 1.2d, MILAGE_CITY=0d,
+						 ENGINE_VOL_SUV = 2.5d, MILAGE_SUV=0d;
+	
     public void constructSportsCar(Builder builder) {
         builder.setCarType(CarType.SPORTS_CAR);
-        builder.setSeats(2);
-        builder.setEngine(new Engine(3.0, 0));
+        builder.setSeats(NUM_SEATS_SPORT);
+        builder.setEngine(new Engine(ENGINE_VOL_SPORT, MILAGE_SPORT));
         builder.setTransmission(Transmission.SEMI_AUTOMATIC);
         builder.setTripComputer(new TripComputer());
         builder.setGPSNavigator(new GPSNavigator());
@@ -18,8 +22,8 @@ public class Director {
 
     public void constructCityCar(Builder builder) {
         builder.setCarType(CarType.CITY_CAR);
-        builder.setSeats(2);
-        builder.setEngine(new Engine(1.2, 0));
+        builder.setSeats(NUM_SEATS_CITY);
+        builder.setEngine(new Engine(ENGINE_VOL_CITY, MILAGE_CITY));
         builder.setTransmission(Transmission.AUTOMATIC);
         builder.setTripComputer(new TripComputer());
         builder.setGPSNavigator(new GPSNavigator());
@@ -27,8 +31,8 @@ public class Director {
 
     public void constructSUV(Builder builder) {
         builder.setCarType(CarType.SUV);
-        builder.setSeats(4);
-        builder.setEngine(new Engine(2.5, 0));
+        builder.setSeats(NUM_SEATS_SUV);
+        builder.setEngine(new Engine(ENGINE_VOL_SUV, MILAGE_SUV));
         builder.setTransmission(Transmission.MANUAL);
         builder.setGPSNavigator(new GPSNavigator());
     }
