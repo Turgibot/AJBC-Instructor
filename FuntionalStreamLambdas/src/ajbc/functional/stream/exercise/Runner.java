@@ -22,12 +22,19 @@ public class Runner {
 		List<String> names = characters.stream().filter((x) -> x.getContinent() == Continent.Kalimdor)
 				.map(GameCharacter::getName) // This is java method reference, equivalent to: .map(c -> c.getName())
 				.collect(Collectors.toList());
-
+		System.out.println("=====  1  =====");
+		System.out.println(names);
 		// 2
 
-		characters.stream().sorted(Comparator.comparing(GameCharacter::getHitPoints)) // Equivalent to comparing(c ->
-																						// c.getHitPoints())
-				.forEach(System.out::println); // Equivalent to .forEach(c -> System.out.println(c))
+		System.out.println("=====  2  =====");
+		characters.stream().sorted((g1, g2) -> {
+			double diff = g1.getHitPoints() - g2.getHitPoints();
+			return diff == 0.0 ? 0 : (diff > 0 ? 1 : -1);
+		}).forEach(System.out::println);
+
+//		characters.stream().sorted(Comparator.comparing(GameCharacter::getHitPoints)) // Equivalent to comparing(c ->
+//																						// c.getHitPoints())
+//				.forEach(System.out::println); // Equivalent to .forEach(c -> System.out.println(c))
 
 		// 3
 		List<Double> hitPoints = characters.stream().filter((character) -> character.getLevel() == 120) // Get all level
@@ -40,16 +47,14 @@ public class Runner {
 		double average = hitPoints.stream().reduce(0.0, (acc, next) -> acc + next) / hitPoints.size();
 		// Identity (starting) element is 0, sum the elements in hitPoints and divide by
 		// hitPoints.size() (3) to get the average.
-		
-		//4
+		System.out.println("=====  3  =====");
+		System.out.println("Average : " + average);
+		// 4
 		List<String> characterNames = Arrays.asList("Durotan", "Grom", "Garrosh", "Garona", "Nazgrim", "Varok");
-		List<GameCharacter> honorableOrcs =
-				characterNames.stream()
-				.map((name)->new GameCharacter(name, "Honorable Orc", "Orgrimmar", 
-                15, 200 +(Math.random()*100), Continent.Kalimdor)).collect(Collectors.toList());
-
-		
-		
-
+		List<GameCharacter> honorableOrcs = characterNames.stream().map((name) -> new GameCharacter(name,
+				"Honorable Orc", "Orgrimmar", 15, 200 + (Math.random() * 100), Continent.Kalimdor))
+				.collect(Collectors.toList());
+		System.out.println("=====  4  =====");
+		System.out.println(honorableOrcs);
 	}
 }

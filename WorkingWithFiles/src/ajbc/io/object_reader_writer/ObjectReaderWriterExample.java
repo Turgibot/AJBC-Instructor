@@ -1,5 +1,6 @@
 package ajbc.io.object_reader_writer;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class ObjectReaderWriterExample {
 		Dog dog1 = new Dog("Jerry", "Poodle");
 		Dog dog2 = new Dog("Spock", "Cocker Spanial");
 		Dog dog3 = new Dog("Zoey", "Sibirian Huskey");
-		try (FileOutputStream fileOut = new FileOutputStream("myFiles/objFile1.dat");
+		try (FileOutputStream fileOut = new FileOutputStream("myFiles/objFile1.ser");
 				// Creates an ObjectOutputStream
 				ObjectOutputStream objOut = new ObjectOutputStream(fileOut)) {
 
@@ -44,13 +45,19 @@ public class ObjectReaderWriterExample {
 	}
 
 	private static void ObjectReaderDemo() throws FileNotFoundException, IOException, ClassNotFoundException {
-		try (FileInputStream file = new FileInputStream("myFiles/objFile1.dat");
+		try (FileInputStream file = new FileInputStream("myFiles/objFile1.ser");
 				// Creates an ObjectOutputStream
 				ObjectInputStream objStream = new ObjectInputStream(file);) {
+			try {
+			
 			System.out.println("Dog1 :" + (Dog)objStream.readObject());
 			System.out.println("Dog2 :" + (Dog)objStream.readObject());
 			System.out.println("Dog3 :" + (Dog)objStream.readObject());
-
+			System.out.println("Dog4 :" + (Dog)objStream.readObject());
+			}catch(EOFException e) {
+				System.out.println("No more data");
+			}
+		
 
 		}
 

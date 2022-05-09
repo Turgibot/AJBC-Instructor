@@ -9,11 +9,11 @@ public class Person {
 		this.lName = lName;
 		this.age = age;
 	}
-
 	@Override
 	public String toString() {
-		return "Person [fName=" + fName + ", lName=" + lName + "]";
+		return "Person [fName=" + fName + ", lName=" + lName + ", age=" + age + "]";
 	}
+
 	
 	
 }

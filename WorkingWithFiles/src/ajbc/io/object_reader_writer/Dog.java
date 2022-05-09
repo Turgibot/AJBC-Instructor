@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 class Dog implements Serializable {
 
-	private static final long serialVersionUID = 491320536947310540L;
+	private static final long serialVersionUID = -5255351360839265720L;
 	String name;
     String breed;
 
