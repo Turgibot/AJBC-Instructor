@@ -27,14 +27,14 @@ public class Runner {
 		// 2
 
 		System.out.println("=====  2  =====");
-		characters.stream().sorted((g1, g2) -> {
-			double diff = g1.getHitPoints() - g2.getHitPoints();
-			return diff == 0.0 ? 0 : (diff > 0 ? 1 : -1);
-		}).forEach(System.out::println);
+//		characters.stream().sorted((g1, g2) -> {
+//			double diff = g1.getHitPoints() - g2.getHitPoints();
+//			return diff == 0.0 ? 0 : (diff > 0 ? 1 : -1);
+//		}).forEach(System.out::println);
 
-//		characters.stream().sorted(Comparator.comparing(GameCharacter::getHitPoints)) // Equivalent to comparing(c ->
-//																						// c.getHitPoints())
-//				.forEach(System.out::println); // Equivalent to .forEach(c -> System.out.println(c))
+		characters.stream().sorted(Comparator.comparing(GameCharacter::getHitPoints)) // Equivalent to comparing(c ->
+																						// c.getHitPoints())
+				.forEach(System.out::println); // Equivalent to .forEach(c -> System.out.println(c))
 
 		// 3
 		List<Double> hitPoints = characters.stream().filter((character) -> character.getLevel() == 120) // Get all level
@@ -50,11 +50,11 @@ public class Runner {
 		System.out.println("=====  3  =====");
 		System.out.println("Average : " + average);
 		// 4
-		List<String> characterNames = Arrays.asList("Durotan", "Grom", "Garrosh", "Garona", "Nazgrim", "Varok");
+		List<String> characterNames = Arrays.asList("Durotan", "Grom", "Garrosh", "Garona", "Nazgrim");
 		List<GameCharacter> honorableOrcs = characterNames.stream().map((name) -> new GameCharacter(name,
 				"Honorable Orc", "Orgrimmar", 15, 200 + (Math.random() * 100), Continent.Kalimdor))
 				.collect(Collectors.toList());
 		System.out.println("=====  4  =====");
-		System.out.println(honorableOrcs);
+		honorableOrcs.forEach(System.out::println);
 	}
 }

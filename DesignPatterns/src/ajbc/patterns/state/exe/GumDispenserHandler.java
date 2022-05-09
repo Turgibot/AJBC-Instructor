@@ -25,12 +25,13 @@ public class GumDispenserHandler {
 	private boolean act(int opt) {
 		System.out.println("Processing....");
 		State state = gumDispeser.getState();
-		return opt == 1 ? state.onInsert5() : state.onInsert10();
+		return opt == 1 ? state.onInsert5() :opt == 2? state.onInsert10(): state.takeGum();
 	}
 
 	private void showOptions() {
 		System.out.println("Please enter:");
 		System.out.println("1 - if you're inserting a 5 cents coin");
-		System.out.println("1 - if you're inserting a 10 cents coin:");
+		System.out.println("2 - if you're inserting a 10 cents coin");
+		System.out.println("3 - To collect the gum...");
 	}
 }
