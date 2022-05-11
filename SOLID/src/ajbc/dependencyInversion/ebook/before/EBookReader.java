@@ -2,14 +2,18 @@ package ajbc.dependencyInversion.ebook.before;
 
 public class EBookReader {
 
-	private PDFBook book;
+	private EBook eBook;
 	
-	public EBookReader(PDFBook pdfBook) {
-		this.book = pdfBook;
+	public EBookReader(EBook pdfBook) {
+		this.eBook = pdfBook;
 	}
+	
+//	public EBookReader() {
+//		this.book = new PDFBook();
+//	}
 
 	public String read() {
-		return book.read();
+		return eBook.read();
 	}
 	
 }

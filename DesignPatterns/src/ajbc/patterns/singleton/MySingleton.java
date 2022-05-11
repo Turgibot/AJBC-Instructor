@@ -17,6 +17,7 @@ public final class MySingleton {
 		 * Calling getInstance() method many times returns same hashcode that proves
 		 * that Singleton class creates only one instance
 		 */
+		
 		MySingleton singleton1 = MySingleton.getInstance();
 		MySingleton singleton2 = MySingleton.getInstance();
 

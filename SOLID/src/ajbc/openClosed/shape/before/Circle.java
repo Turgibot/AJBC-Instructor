@@ -1,6 +1,6 @@
 package ajbc.openClosed.shape.before;
 
-public class Circle {
+public class Circle implements Shape{
 	
 	private int radius;
 	
@@ -10,6 +10,12 @@ public class Circle {
 
 	public int getRadius() {
 		return radius;
+	}
+
+	@Override
+	public double calculateArea() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

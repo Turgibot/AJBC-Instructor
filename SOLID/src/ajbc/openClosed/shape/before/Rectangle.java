@@ -1,6 +1,6 @@
 package ajbc.openClosed.shape.before;
 
-public class Rectangle {
+public class Rectangle implements Shape{
 	
 	private int height;
 	private int width;
@@ -16,5 +16,11 @@ public class Rectangle {
 
 	public int getWidth() {
 		return width;
+	}
+
+	@Override
+	public double calculateArea() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

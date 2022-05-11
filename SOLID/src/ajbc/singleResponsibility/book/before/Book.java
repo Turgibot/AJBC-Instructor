@@ -3,9 +3,7 @@ package ajbc.singleResponsibility.book.before;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by lore on 13/01/18.
- */
+
 public class Book {
     private String title;
     private String author;

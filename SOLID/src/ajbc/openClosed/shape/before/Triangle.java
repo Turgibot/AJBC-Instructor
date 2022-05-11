@@ -1,6 +1,6 @@
 package ajbc.openClosed.shape.before;
 
-public class Triangle {
+public class Triangle implements Shape{
 	private int height;
 	private int base;
 	
@@ -16,4 +16,10 @@ public class Triangle {
 	public int getBase() {
 		return base;
 	}
+
+	@Override
+	public double calculateArea() {
+		 return (double)base * height / 2.0;
+	}
+		
 }
