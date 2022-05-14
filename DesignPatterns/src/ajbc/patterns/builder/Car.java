@@ -9,7 +9,7 @@ public class Car {
     private final Transmission transmission;
     private final TripComputer tripComputer;
     private final GPSNavigator gpsNavigator;
-    private double fuel = 0;
+    private double fuel;
 
     public Car(CarType carType, int seats, Engine engine, Transmission transmission,
                TripComputer tripComputer, GPSNavigator gpsNavigator) {
