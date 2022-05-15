@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class>
+   <student rollNumber="393">
+      <firstname>Gadi</firstname>
+      <lastname>Finkelstein</lastname>
+      <nickname>Gadish</nickname>
+      <marks>85</marks>
+   </student>
+   <student rollNumber="493">
+      <firstname>Dina</firstname>
+      <lastname>Shamir</lastname>
+      <nickname>Dindin</nickname>
+      <marks>95</marks>
+   </student>
+   <student rollNumber="593">
+      <firstname>Shooki</firstname>
+      <lastname>Abutbul</lastname>
+      <nickname>Tooki</nickname>
+      <marks>90</marks>
+   </student>
+</class>
