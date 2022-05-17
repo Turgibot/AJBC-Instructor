@@ -19,6 +19,7 @@ public class Query {
 			File inputFile = new File("myFiles/myStudents.xml");
 			SAXBuilder saxBuilder = new SAXBuilder();
 			Document document = saxBuilder.build(inputFile);
+			System.out.println(document);
 			System.out.println("Root element :" + document.getRootElement().getName());
 			Element classElement = document.getRootElement();
 

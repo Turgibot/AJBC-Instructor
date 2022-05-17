@@ -23,7 +23,7 @@ public class Create {
 			Element supercarElement = new Element("supercars");
 			supercarElement.setAttribute(new Attribute("company", "Ferrari"));
 
-			// supercars element
+			// supercar element
 			Element carElement1 = new Element("carname");
 			carElement1.setAttribute(new Attribute("type", "formula one"));
 			carElement1.setText("Ferrari 101");
@@ -36,13 +36,16 @@ public class Create {
 			supercarElement.addContent(carElement2);
 
 			doc.getRootElement().addContent(supercarElement);
-
+			Element ele = new Element("Guy");
+			ele.addContent("Tordjman");
+			doc.getRootElement().addContent(ele);
+			
 			XMLOutputter xmlOutput = new XMLOutputter();
 
 			// display format
 			xmlOutput.setFormat(Format.getPrettyFormat());
 			// save to a file
-			File outputFile = new File("myFiles/cars.xml");
+			File outputFile = new File("myFiles/cars3.xml");
 			OutputStream outputStream = new FileOutputStream(outputFile);
 			xmlOutput.output(doc, outputStream);
 		} catch (IOException e) {

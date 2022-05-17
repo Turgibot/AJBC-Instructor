@@ -33,8 +33,8 @@ public class Modify {
 			// loop the supercar child node
 			List<Element> list = supercarElement.getChildren();
 
-			for (int temp = 0; temp < list.size(); temp++) {
-				Element carElement = list.get(temp);
+			for (int i = 0; i < list.size(); i++) {
+				Element carElement = list.get(i);
 
 				if ("Ferrari 101".equals(carElement.getText())) {
 					carElement.setText("Lamborigini 001");
@@ -47,8 +47,8 @@ public class Modify {
 			// get all supercars element
 			List<Element> supercarslist = rootElement.getChildren();
 
-			for (int temp = 0; temp < supercarslist.size(); temp++) {
-				Element tempElement = supercarslist.get(temp);
+			for (int i = 0; i < supercarslist.size(); i++) {
+				Element tempElement = supercarslist.get(i);
 
 				if ("luxurycars".equals(tempElement.getName())) {
 					rootElement.removeContent(tempElement);

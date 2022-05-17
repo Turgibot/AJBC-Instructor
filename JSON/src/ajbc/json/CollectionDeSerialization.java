@@ -32,9 +32,19 @@ public class CollectionDeSerialization {
 			
 			//arrays are deserialized immediately
 			Address[] addArray = gson.fromJson(jsonReader, Address[].class);
+			
+			
+			
+			
 			for (Address address : addArray) {
 				System.out.println(address);
 			}
+			
+			
+			
+			
+			
+			
 			//collections need TypeToken
 			jsonReader = new JsonReader(fileReader2);
 			Type addressListType = new TypeToken<ArrayList<Address>>(){}.getType();
