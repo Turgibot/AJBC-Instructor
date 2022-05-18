@@ -1,5 +1,8 @@
 package src;
-
+/**
+ * Created by the student Rotem Levi
+ * Thank you Rotem
+ */
 import java.time.LocalDate;
 
 public class Runner {
