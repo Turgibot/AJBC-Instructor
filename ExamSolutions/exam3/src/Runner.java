@@ -2,6 +2,8 @@ package src;
 /**
  * Created by the student Rotem Levi
  * Thank you Rotem
+ * 
+ * The original project has test and src folder seperated and packages of test case and class under test was identical.  
  */
 import java.time.LocalDate;
 
