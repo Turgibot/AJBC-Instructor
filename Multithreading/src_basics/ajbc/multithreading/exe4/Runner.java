@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Runner {
+	private static final int INDEX = 3;
 	final static int SIZE = 1000;
 	static List<Integer> intList1 = new ArrayList<Integer>(SIZE);
 	static List<Integer> intList2 = new ArrayList<Integer>(SIZE);
@@ -14,7 +15,7 @@ public class Runner {
 			intList2.add(i + SIZE);
 		}
 
-		intList1.add(3, -1);
+		intList1.add(INDEX, -1);
 
 		Thread thread1 = new Thread(hasNegative, "thread1");
 		Thread thread2 = new Thread(hasCommon, "thread2");

@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 public class CollectionSerialization {
 
 	public static void run() {
-
+		
 		Address address1 = new Address("Hawaii", "Honolulu");
 		Address address2 = new Address("New York", "New York");
 		Address address3 = new Address("Florida", "Miami");
