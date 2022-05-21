@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Runner {
+	private static final int NUM_THREADS = 1000;
 	private static int globalCounter = 0;
 
 	public static void main(String[] args) {
@@ -11,8 +12,8 @@ public class Runner {
 
 		ThreadGroup group = new ThreadGroup("Group1");
 
-		for (int i = 1; i <= 1000; i++) {
-			Thread t = new Thread(group, new MyThread());
+		for (int i = 1; i <= NUM_THREADS; i++) {
+			Thread t = new Thread(group, new MyRunnable());
 			t.start();
 			threads.add(t);
 		}
@@ -30,7 +31,7 @@ public class Runner {
 		System.out.println("Total = " + globalCounter);
 	}
 
-	static class MyThread implements Runnable {
+	static class MyRunnable implements Runnable {
 		@Override
 		public void run() {
 			try {
@@ -38,11 +39,11 @@ public class Runner {
 			} catch (InterruptedException e) {
 
 			}
-			globalCounter++;
+//			globalCounter++;
 
-//            int localCounter = globalCounter;
-//            localCounter = localCounter + 1;
-//            globalCounter = localCounter;
+            int localCounter = globalCounter;
+            localCounter = localCounter + 1;
+            globalCounter = localCounter;
 		}
 	}
 

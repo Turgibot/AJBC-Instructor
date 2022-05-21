@@ -25,10 +25,12 @@ public class Runner {
 	public static void main(String[] args) {
 		Queue<String> queue = new LinkedList<>();
 
-		Thread producer = new Thread(new Producer(queue));
+		Thread producer1 = new Thread(new Producer(queue), "Producer 1");
+//		Thread producer2 = new Thread(new Producer(queue), "Producer 2");
 		Thread consumer = new Thread(new Consumer(queue));
 
-		producer.start();
+		producer1.start();
+//		producer2.start();
 		consumer.start();
 	}
 
@@ -52,20 +54,21 @@ public class Runner {
 
 		private void produceData() throws InterruptedException {
 			synchronized (queue) {
-				if (queue.size() == 10) {
+				while (queue.size() == 10) {
 					System.out.println("In producer, waiting...");
 					queue.wait();
 				}
 
-				Thread.sleep(1000);
+				Thread.sleep(500);
 
-				System.out.println("Producing data with id " + queue.size());
+				System.out.println(Thread.currentThread().getName()+" is producing data with id " + queue.size());
 				queue.add("element_" + queue.size());
 
-//				if (queue.size() == 1) {
-//					queue.notify();
-//				}
-				queue.notify();
+				//let consumer know that there is already 1 element in queue to consume
+				if (queue.size() == 1) {
+					queue.notify();
+				}
+//				queue.notify();
 			}
 		}
 	}
@@ -91,21 +94,23 @@ public class Runner {
 
 		private void consumeData() throws InterruptedException {
 			synchronized (queue) {
-				if (queue.isEmpty()) {
+				//wait id there's nothing to consume
+				while (queue.isEmpty()) {
 					System.out.println("Consumer is waiting...");
 					queue.wait();
 				}
 
-				Thread.sleep(700);
+				Thread.sleep(500);
 
 				String data = queue.remove();
 				System.out.println("Consumed data: " + data);
 
-//				if (queue.size() == 9) {
-//					queue.notify();
-//				}
+				//let producer know that the consuming started
+				if (queue.size() == 9) {
+					queue.notify();
+				}
 
-				queue.notify();
+//				queue.notify();
 
 			}
 		}

@@ -14,6 +14,7 @@ public class Runner {
     private static List<Integer> list = new ArrayList<>();
 
     public static void main(String[] args) {
+    	
         Thread writer = new Thread(new WriterThread());
 
         Thread reader1 = new Thread(new ReaderThread());
@@ -72,16 +73,16 @@ public class Runner {
 
         private void readData() throws InterruptedException {
             Thread.sleep(3000);
-            //spin lock
-//            while (true) {
-//                boolean acquired = readLock.tryLock();
-//                if (acquired) {
-//                    break;
-//                } else {
-//                    System.out.println("Waiting for read lock...");
-//                }
-//            }
-            readLock.lock();
+//            spin lock
+            while (true) {
+                boolean acquired = readLock.tryLock();
+                if (acquired) {
+                    break;
+                } else {
+                    System.out.println("Waiting for read lock...");
+                }
+            }
+//            readLock.lock();
             System.out.println("List is: " + list);
             readLock.unlock();
         }

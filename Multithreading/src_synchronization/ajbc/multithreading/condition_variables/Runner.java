@@ -9,7 +9,6 @@ public class Runner {
 
     private static Lock lock = new ReentrantLock();
     private static Condition condition = lock.newCondition();
-    private static Condition condition1 = lock.newCondition();
 
     public static void main(String[] args) {
         Queue<String> queue = new LinkedList<>();

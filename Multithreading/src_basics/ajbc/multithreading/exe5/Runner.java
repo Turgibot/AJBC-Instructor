@@ -16,20 +16,33 @@ public class Runner {
 			intList1.add(i);
 		}
 		intList1.set(100, null);
-		Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable exception) -> {
+		
+		
+		Thread thread1 = new Thread(doubleElement, "Thread 1");
+		Thread thread2 = new Thread(stringifyElement, "Thread 2");
+		Thread thread3 = new Thread(divideElement, "Thread 3");
+		
+		Thread.setDefaultUncaughtExceptionHandler(( t,  e) -> {
 			System.out.println("Found Null in " + Thread.currentThread().getName());
 			System.out.println("doubleValueList size is " + doubleValueList.size());
 		});
-		Thread thread1 = new Thread(doubleElement, "Thread 1");
-		thread1.start();
-		Thread thread2 = new Thread(stringifyElement, "Thread 2");
-		thread2.setUncaughtExceptionHandler((t, exception) -> {
+		
+		
+		thread2.setUncaughtExceptionHandler((t, e) -> {
 			System.out.println("Found Null in " + Thread.currentThread().getName());
 			System.out.println("stringValueList size is " + stringValueList.size());
 		});
+	
+		
+		
+		thread1.start();
 		thread2.start();
-		Thread thread3 = new Thread(divideElement, "Thread 3");
 		thread3.start();
+		
+
+		thread1.join();
+		thread2.join();
+		thread3.join();
 
 	}
 

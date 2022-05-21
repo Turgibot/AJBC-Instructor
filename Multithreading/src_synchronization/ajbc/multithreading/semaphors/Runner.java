@@ -1,7 +1,5 @@
 package ajbc.multithreading.semaphors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Runner {
 
@@ -11,9 +9,12 @@ public class Runner {
 
         Executor executor = new Executor();
 
-        executor.submit(new Job(4000));
-        executor.submit(new Job(5000));
-        executor.submit(new Job(3000));
+        executor.submit(new Job(1001));
+        executor.submit(new Job(1002));
+        executor.submit(new Job(1003));
+
+        executor.submit(new Job(1004));
+        executor.submit(new Job(1005));
     }
 
     static class Executor {

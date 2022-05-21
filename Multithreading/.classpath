@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src_basics"/>
 	<classpathentry kind="src" path="src_synchronization"/>
+	<classpathentry kind="src" path="src_problems"/>
+	<classpathentry kind="src" path="src_pools"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

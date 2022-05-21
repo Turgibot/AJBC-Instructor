@@ -1,64 +1,77 @@
 package ajbc.multithreading.synchronized_keyword;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Runner {
 
-    private static int globalCounter = 0;
-    private static final Object obj = new Object();
+	// Synchronized block and method
 
-    public static void main(String[] args) {
-        List<Thread> threads = new ArrayList<>();
+	private static int globalCounter = 0;
+	private static final Object synchronizer = new Object();
+	
+	private static Runner runner = new Runner();
+	public static void main(String[] args) {
+		List<Thread> threads = new ArrayList<>();
 
-        ThreadGroup group = new ThreadGroup("Group1");
+		ThreadGroup group = new ThreadGroup("Group1");
 
-        for (int i = 1; i<=1000; i++) {
-            Thread t = new Thread(group, new MyThread());
-            t.start();
-            threads.add(t);
-        }
+		for (int i = 0; i < 1000; i++) {
+			Thread t = new Thread(group, new MyThread());
+			t.start();
+			threads.add(t);
+		}
 
-        group.interrupt();
+		group.interrupt();
 
-        threads.forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
+		threads.forEach(t -> {
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
 
-        System.out.println("Total = " + globalCounter);
-    }
+		System.out.println("Total = " + globalCounter);
+	}
 
-    static class MyThread implements Runnable {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(99999);
-            } catch (InterruptedException e) {
+	static class MyThread implements Runnable {
+		@Override
+		public void run() {
+			try {
+				Thread.sleep(99999);
+			} catch (InterruptedException e) {
 
-            }
-            synchronized (obj) {
-                globalCounter++;
-            }
+			}
+			//1 not synchronized:
+			
+			globalCounter++;
 
+//          int localCounter = globalCounter;
+//          localCounter = localCounter + 1;
+//          globalCounter = localCounter;
+			
+			
+			//2 using synchronized block
+			
+//            synchronized (synchronizer) {
+//                globalCounter++;
+//            }
 
-//            int localCounter = globalCounter;
-//            localCounter = localCounter + 1;
-//            globalCounter = localCounter;
-        }
+			//3. synchronized method
+			//runner.incrementCounter();
+			//or
+			//runner.increment();
+		}
+	}
 
-        private static void staticIncrement() {
-            synchronized (MyThread.class) {
+	private synchronized void incrementCounter() {
+		globalCounter++;
+	}
 
-            }
-        }
-        private synchronized void incrementa() {}
-        private void increment() {
-            synchronized (this) {
-
-            }
-        }
-    }
+	private void increment() {
+		synchronized (this) {
+			globalCounter++;
+		}
+	}
 }
