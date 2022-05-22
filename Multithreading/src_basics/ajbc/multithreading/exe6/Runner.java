@@ -1,66 +1,61 @@
 package ajbc.multithreading.exe6;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Runner {
-	// We have to learn synchronization first but failing is learning
 
-	final static int SIZE = 1000000;
-	final static int NUM_THREADS = 1;
-	static double sum = 0;
-	static List<Double> list1 = new ArrayList<>();
-	public static void main(String[] args) throws InterruptedException {
-		Instant start1 = Instant.now();
+	private static final int SIZE = 1000, NUM_THREADS = 5;
+
+	private List<Integer> list;
+	private int sum;
+
+	public Runner() {
+		this.list = new ArrayList<>();
+	}
+
+	public void initList() {
 		for (int i = 0; i < SIZE; i++) {
-			list1.add(Math.random());
+			list.add(i);
 		}
-		Instant stop1 = Instant.now();
-		Duration duration1 = Duration.between(start1, stop1);
-		System.out.println("Sum: " + sum);
-		System.out.println("summing using main thread took " + duration1.toMillis() + "ms.");
+	}
 
-		List<Thread> threads = new ArrayList<>();
-		ThreadGroup group = new ThreadGroup("Group1");
-		sum = 0;
+	public void sumList() {
+		list.forEach(x -> sum += x);
+	}
+
+	public void printSum() {
+		System.out.println("This is the serial sum result : " + sum);
+	}
+
+	public void addToSum(int addition) {
+		sum += addition;
+	}
+
+	public static void main(String[] args) {
+		Runner runner = new Runner();
+		runner.initList();
+		runner.sumList();
+		runner.printSum();
+		runner.sum = 0;
+
+		int listSlice = SIZE / NUM_THREADS;
+		List<Thread> threads = new ArrayList<>(NUM_THREADS);
+
 		for (int i = 0; i < NUM_THREADS; i++) {
-			Thread t = new Thread(group, new MyThread());
-			t.start();
-			threads.add(t);
+			Thread thread = new Thread(new SumListSection(i * listSlice, (i + 1) * listSlice, runner));
+			thread.start();
+			threads.add(thread);
 		}
-		
-		group.interrupt();
-		
-		Instant start2 = Instant.now();
-		threads.forEach(t -> {
+
+		threads.forEach(x -> {
 			try {
-				t.join();
+				x.join();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		});
-		Instant stop2 = Instant.now();
-		Duration duration2 = Duration.between(start2, stop2);
-		System.out.println("Sum: " + sum);
-		System.out.println("summing using threads took " + duration2.toMillis() + "ms.");
-	}
-
-	static class MyThread implements Runnable {
-
-		@Override
-		public void run() {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-
-			}
-			for (int i = 0; i < SIZE/NUM_THREADS; i++) {
-				list1.add(Math.random());
-			}
-		}
+		System.out.println("This is the parallel sum result : " + runner.sum);
 
 	}
 }

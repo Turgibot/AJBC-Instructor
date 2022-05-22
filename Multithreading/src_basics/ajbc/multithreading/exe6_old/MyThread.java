@@ -1,4 +1,4 @@
-package ajbc.multithreading.exe6;
+package ajbc.multithreading.exe6_old;
 
 public class MyThread extends Thread{
 	private int startRow;
