@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Exe1 {
 	private static int sum = 0;
@@ -39,11 +41,11 @@ public class Exe1 {
 		Exe1 exeObj = new Exe1();
 		exeObj.initList();
 		System.out.println("serialized result = " + exeObj.sumList());
-
+		Lock lock = new ReentrantLock();
 		List<Thread> threads = new ArrayList<>();
 		int sectionSize = SIZE / NUM_THREADS;
 		for (int i = 0; i < NUM_THREADS; i++) {
-			Thread thread = new MyThread(i * sectionSize, (i + 1) * sectionSize, exeObj, "MyThread + " + (i + 1));
+			Thread thread = new MyThread(i * sectionSize, (i + 1) * sectionSize, exeObj, "MyThread + " + (i + 1), lock);
 			thread.start();
 			threads.add(thread);
 		}
@@ -57,9 +59,11 @@ public class Exe1 {
 		private int start;
 		private int end;
 		private Exe1 exeObj;
+		private Lock mutex;
 
-		public MyThread(int start, int end, Exe1 exeObj) {
+		public MyThread(int start, int end, Exe1 exeObj, String string, Lock mutex) {
 			this(start, end, exeObj, Thread.currentThread().getName());
+			this.mutex = mutex;
 		}
 
 		public MyThread(int start, int end, Exe1 exeObj, String name) {
@@ -80,9 +84,9 @@ public class Exe1 {
 		private void sumList() {
 			List<Integer> subList = exeObj.list.subList(start, end);
 			for (Iterator<Integer> iterator = subList.iterator(); iterator.hasNext();) {
-				synchronized (exeObj) {
-					sum += iterator.next();
-				}
+				mutex.lock();
+				sum += iterator.next();
+				mutex.unlock();
 			}
 		}
 	};

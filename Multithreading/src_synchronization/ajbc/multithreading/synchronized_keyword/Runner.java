@@ -61,7 +61,7 @@ public class Runner {
 			//3. synchronized method
 			//runner.incrementCounter();
 			//or
-			//runner.increment();
+			runner.increment();
 		}
 	}
 

@@ -1,79 +1,109 @@
 package ajbc.pools.threadPoolExecutor;
 
-import java.util.concurrent.*;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class Runner {
-	public static void main(String[] args) throws InterruptedException {
-		ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1, // number of threads in normal condition
-				1, // in case of many tasks
-				1, // thread that idle - waiting for tasks will terminate after this time
-				TimeUnit.MINUTES,
-				// new ArrayBlockingQueue<>(3) // 3 is the size of the Q . blocking Q uses locks and have threads wait if
-				// the Q is empty and blocks tasks to be added if Q is full
-				// new LinkedBlockingQueue<>() // for non bounded number of tasks - can cause
-				// memory issues
-				new SynchronousQueue<>(), // assigns a task to a thread - in case there is no thread available the task is rejected
-//				(Runnable r, ThreadPoolExecutor t)->{
-//					System.out.println("Default task rejection handler");
-//				}
-//				new ThreadPoolExecutor.AbortPolicy()
-//				new ThreadPoolExecutor.DiscardOldestPolicy()
-				new ThreadPoolExecutor.CallerRunsPolicy()
+
+	private static final int CORE_THREADS = 1;
+	private static final int MAX_POOL_SIZE = 3;
+	private static final int CAPACITY = 6;
+
+	private static final long KEEP_ALIVE_TIME = 3;
+	// thread pools executor
+//	private static final BlockingQueue<Runnable> tasks = new ArrayBlockingQueue<>(CAPACITY);
+	private static final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
+//	private static final BlockingQueue<Runnable> tasks = new SynchronousQueue<>();
+
+	private static RejectedExecutionHandler handler = (Runnable runnable, ThreadPoolExecutor executor) -> {
+		// runnable.run();
+		// executor.execute(runnable);
+		System.out.println("Rejected task");
+	};
+
+	// 1 wake up core threads from pool one by one up to CORE_THREADS
+	// 2 fill up the queue with tasks one by one up to CAPACITY
+	// 3 if necessary wake up more threads up to a total of MAX_POOL_SIZE
+	// 4 if queue is full and all threads are running - a RejectedExecutionException
+	// is thrown
+
+	public static void main(String[] args) throws InterruptedException, ExecutionException {
+		ThreadPoolExecutor pool = new ThreadPoolExecutor(CORE_THREADS, MAX_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS,
+				tasks
+		// handler
+//				new ThreadPoolExecutor.CallerRunsPolicy()
 		);
 
-		// threadPoolExecutor.prestartAllCoreThreads(); //create all core threads in
-		// advanced to save init time
+		Runnable task = () -> {
+//			sleep(1000);
+			System.out.println("JAVA THREAD");
+		};
 
-		threadPoolExecutor.execute(() -> System.out.println("Task 1"));
-		// threadPoolExecutor.execute(() -> System.out.println("Task 2"));
+		// option 1 try catch every execute
+//		for (int i = 0; i < 15; i++) {
+//			try {
+//				pool.execute(task);
+//				System.out.println(pool.getPoolSize());
+//			} catch (RejectedExecutionException e) {
+//				System.out.println("Task is rejected");
+//			}
+//		}
+		// option 2 use pool constructor to handle exception
+//		for (int i = 0; i < 15; i++) {
+//			pool.execute(task);
+//			sleep(1);
+//			System.out.println(pool.getPoolSize());
+//		}
 
-		// System.out.println("Pool size after 2 tasks: " +
-		// threadPoolExecutor.getPoolSize());
+		Callable<Integer> myCallable = new Callable<Integer>() {
 
-//		threadPoolExecutor.execute(() -> System.out.println("Task 3"));
-//		threadPoolExecutor.execute(() -> System.out.println("Task 4"));
-		// System.out.println("Pool size after 4 tasks: " +
-		// threadPoolExecutor.getPoolSize());
-		try {
-			threadPoolExecutor.execute(() -> System.out.println("How to handle task rejection ??"));
-		} catch (RejectedExecutionException e) {
-			System.out.println("Signal that task got rejected");
+			@Override
+			public Integer call() throws Exception {
+				sleep(5000);
+				return 4;
+			}
+		};
+
+		Future<Integer> future = pool.submit(myCallable);
+
+		if (!future.isDone()) {
+			future.cancel(false);
 		}
-		Future<Integer> future = threadPoolExecutor.submit(new CallableTask()); // asynchronous operation
-		System.out.println("Pool size after 6 tasks: " + threadPoolExecutor.getPoolSize());
-		// Do other stuff
 
-//        while(!future.isDone()) {
-//          future.cancel(false);
-//        	future.isCancelled();
-//        }
+		Future<?> result = pool.submit(task);
+		result.get();
 
-		Integer result = null;
 		try {
-			result = future.get();// blocking operation
-		} catch (InterruptedException | ExecutionException e) {
-			// handle rejected task
-		}
-		System.out.println("result is " + result);
 
-		threadPoolExecutor.shutdown(); // gracefully : 1. stops accepting new task 2. executes all existing tasks
-		// threadPoolExecutor.shutdownNow(); //Not gracefully : 1. stops accepting new
-		// task 2. sends interrupt message to all the threads
-		threadPoolExecutor.awaitTermination(3, TimeUnit.SECONDS); // this is necessary because shutdown is non blocking
-		
-		//monitoring
-//		 threadPoolExecutor.getPoolSize());
-//		threadPoolExecutor.getActiveCount();
-//		threadPoolExecutor.getTaskCount();
-//		threadPoolExecutor.getCompletedTaskCount();
+			System.out.println(future.get());
+		} catch (CancellationException e) {
+			System.out.println("task is cancelled");
+		}
+
+		// gracefully shutdown
+		pool.shutdown();
+
+		// Show wait for execution
 	}
 
-	static class CallableTask implements Callable<Integer> {
+	static void sleep(int time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
 
-		@Override
-		public Integer call() throws Exception {
-			Thread.sleep(2000);
-			return 4;
+			e.printStackTrace();
 		}
 	}
 }

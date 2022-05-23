@@ -9,5 +9,6 @@
 	<classpathentry kind="src" path="src_synchronization"/>
 	<classpathentry kind="src" path="src_problems"/>
 	<classpathentry kind="src" path="src_pools"/>
+	<classpathentry kind="src" path="src_executors"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

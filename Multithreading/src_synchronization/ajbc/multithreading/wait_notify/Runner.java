@@ -5,76 +5,27 @@ import java.util.Queue;
 
 public class Runner {
 
-	private static final Object obj = new Object();
-
-//    public static void main(String[] args) throws InterruptedException {
-//
-//        // Thread 1
-//        synchronized (obj) {
-//            obj.wait();
-//            System.out.println("Next instructions");
-//        }
-//
-//        // Thread 2
-//        synchronized (obj) {
-//            obj.notifyAll();
-//            System.out.println("Next instructions");
-//        }
-//    }
+	// producer consumer
+	static int SIZE_LINIT = 5;
 
 	public static void main(String[] args) {
+		// create a data structure to hold the produced data
 		Queue<String> queue = new LinkedList<>();
 
-		Thread producer1 = new Thread(new Producer(queue), "Producer 1");
-//		Thread producer2 = new Thread(new Producer(queue), "Producer 2");
+		// lets create the threads
+
+		Thread producer = new Thread(new Producer(queue));
 		Thread consumer = new Thread(new Consumer(queue));
+		
 
-		producer1.start();
-//		producer2.start();
+		producer.start();
 		consumer.start();
+		
 	}
 
-	static class Producer implements Runnable {
-		private final Queue<String> queue;
-
-		public Producer(Queue<String> queue) {
-			this.queue = queue;
-		}
-
-		@Override
-		public void run() {
-			while (true) {
-				try {
-					produceData();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-
-		private void produceData() throws InterruptedException {
-			synchronized (queue) {
-				while (queue.size() == 10) {
-					System.out.println("In producer, waiting...");
-					queue.wait();
-				}
-
-				Thread.sleep(500);
-
-				System.out.println(Thread.currentThread().getName()+" is producing data with id " + queue.size());
-				queue.add("element_" + queue.size());
-
-				//let consumer know that there is already 1 element in queue to consume
-				if (queue.size() == 1) {
-					queue.notify();
-				}
-//				queue.notify();
-			}
-		}
-	}
+	// lets create a consumer runnable
 
 	static class Consumer implements Runnable {
-
 		private final Queue<String> queue;
 
 		public Consumer(Queue<String> queue) {
@@ -87,6 +38,7 @@ public class Runner {
 				try {
 					consumeData();
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -94,25 +46,70 @@ public class Runner {
 
 		private void consumeData() throws InterruptedException {
 			synchronized (queue) {
-				//wait id there's nothing to consume
-				while (queue.isEmpty()) {
-					System.out.println("Consumer is waiting...");
-					queue.wait();
+				if (queue.isEmpty()) {
+					System.out.println("Consumer has no data to consume - Waiting for producer....");
+					queue.wait(); // lock is returned to queue object
 				}
 
 				Thread.sleep(500);
-
-				String data = queue.remove();
-				System.out.println("Consumed data: " + data);
-
-				//let producer know that the consuming started
-				if (queue.size() == 9) {
+				System.out.println(Thread.currentThread().getName() + " is CONSUMING data with id " + queue.size());
+				queue.remove();
+				if (queue.size() == 1)
 					queue.notify();
-				}
-
-//				queue.notify();
-
 			}
+
+		}
+
+	}
+
+	// lets create a producer runnable
+
+	static class Producer implements Runnable {
+
+		private final Queue<String> queue;
+
+		public Producer(Queue<String> queue) {
+			this.queue = queue;
+		}
+
+		@Override
+		public void run() {
+			while (true) {
+				try {
+					produceDate();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		private void produceDate() throws InterruptedException {
+			synchronized (queue) {
+				if (queue.size() == SIZE_LINIT) {
+					System.out.println("Queue is in its size limit - Producer is waiting for Consumption");
+					queue.wait();
+				}
+				Thread.sleep(1000);
+				System.out.println(Thread.currentThread().getName() + " is producing data with id " + queue.size());
+				queue.add("element " + queue.size());
+				if (queue.size() == SIZE_LINIT - 1)
+					queue.notify();
+			}
+		}
+
+	}
+
+	public static void howToWaitNotify() throws InterruptedException {
+
+		Runner runner = new Runner();
+		synchronized (runner) {
+			// thread is entering waiting Q
+			runner.wait();
+		}
+
+		synchronized (runner) {
+			// thread is released from waiting Q
+			runner.notify();
 		}
 	}
 }

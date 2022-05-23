@@ -1,4 +1,4 @@
-package ajbc.pools.recursiveTask;
+package ajbc.pools.forkjoin.sumArray.exe2;
 
 import java.util.Arrays;
 import java.util.concurrent.*;
@@ -17,7 +17,9 @@ public class Runner {
         Future<Double> future = pool.submit(new SumTask(nums, 0, nums.length));
 
         double summation = future.get();
-
+        
+        pool.shutdown();
+		pool.awaitTermination(1, TimeUnit.SECONDS);
         System.out.println("Summation " + summation);
     }
 
