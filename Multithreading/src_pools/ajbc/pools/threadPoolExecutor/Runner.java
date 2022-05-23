@@ -95,7 +95,9 @@ public class Runner {
 		// gracefully shutdown
 		pool.shutdown();
 
-		// Show wait for execution
+		// wait for execution to end
+		
+		pool.awaitTermination(30, TimeUnit.SECONDS);
 	}
 
 	static void sleep(int time) {
