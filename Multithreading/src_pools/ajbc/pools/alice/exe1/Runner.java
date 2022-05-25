@@ -3,15 +3,19 @@ package ajbc.pools.alice.exe1;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.concurrent.*;
 
 public class Runner {
-	static char[] array = new char[10000];
-	static Map<String, Integer> wordsMap = new HashMap<>();
+	static volatile Map<String, Integer> wordsMap = new HashMap<>();
 
 	public static void main(String[] args) throws ExecutionException, InterruptedException, FileNotFoundException {
 		File file = new File("alice.txt");
@@ -24,29 +28,39 @@ public class Runner {
 				new ThreadPoolExecutor.CallerRunsPolicy());
 		try (Scanner sc = new Scanner(file)) {
 			while (sc.hasNext()) {
-				String[] line = sc.nextLine().replaceAll("[.,-]", " ").replace('\'', ' ').split(" ");
-				
-				
-				
-				threadPoolExecutor.execute(()->{
-					for (String word : line) {
-						if(word.isEmpty()||word==null)
+
+				String[] words = sc.nextLine().replaceAll("[.,-]", " ").replace('\'', ' ').split(" ");
+
+				threadPoolExecutor.execute(() -> {
+					for (String word : words) {
+						if (word.isEmpty() || word == null)
 							continue;
-						if(!wordsMap.containsKey(word)) {
-							wordsMap.put(word, 1);
-						}
-						else {
-							wordsMap.put(word, 1+wordsMap.get(word));
+						synchronized (wordsMap) {
+							if (!wordsMap.containsKey(word)) {
+								wordsMap.put(word, 1);
+							} else {
+								wordsMap.put(word, 1 + wordsMap.get(word));
+							}
 						}
 					}
 				});
 			}
 		}
-		
-		threadPoolExecutor.shutdown(); 
+
+		threadPoolExecutor.shutdown();
 		threadPoolExecutor.awaitTermination(30, TimeUnit.SECONDS);
-		wordsMap.entrySet().stream().forEach((s)->System.out.println(s.getKey()+" : "+s.getValue()));
-		
+
+		//TODO use Stream API
+		List<Entry<String, Integer>> list = new ArrayList<>(wordsMap.entrySet());
+		list.sort(Entry.comparingByValue());
+
+		Map<String, Integer> result = new LinkedHashMap<>();
+		for (Entry<String, Integer> entry : list) {
+			result.put(entry.getKey(), entry.getValue());
+		}
+
+		result.entrySet().stream().forEach((s) -> System.out.println(s.getKey() + " : " + s.getValue()));
+
 	}
 
 }

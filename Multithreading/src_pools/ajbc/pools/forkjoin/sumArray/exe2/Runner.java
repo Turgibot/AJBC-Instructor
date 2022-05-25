@@ -10,7 +10,7 @@ public class Runner {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ForkJoinPool pool = new ForkJoinPool();
         
-        double[] nums = new double[9];
+        double[] nums = new double[1000000];
         for (int i = 0; i < nums.length; i++) {
             nums[i] = i;
         }
@@ -24,7 +24,7 @@ public class Runner {
     }
 
     static class SumTask extends RecursiveTask<Double> {
-        final int seqThreshold = 1;
+        final int seqThreshold = 1000;
         double[] data;
         int start, end;
       

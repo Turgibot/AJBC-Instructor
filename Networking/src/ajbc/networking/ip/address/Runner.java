@@ -2,41 +2,44 @@ package ajbc.networking.ip.address;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 public class Runner {
-	public static void main(String args[]) throws UnknownHostException {
 
-		// obtain the IP address of the localhost (the computer the program is running
-		// on):
-		InetAddress Address = InetAddress.getLocalHost();
+	public static void main(String[] args) throws UnknownHostException {
+		// obtain the ip of your own computer
+		InetAddress myAddress = InetAddress.getLocalHost();
+		System.out.println(myAddress);
 
-		// print the InetAddress Object of localhost
-		System.out.println("locahost InetAddress: " + Address);
+		// obtain ip and name as Strings
+		String myIP = myAddress.getHostAddress();
+		String myHostName = myAddress.getHostName();
 
-		// print the address only
-		System.out.println("locahost host address: " + Address.getHostAddress());
-		// print the name only
-		System.out.println("locahost host name: " + Address.getHostName());
-		System.out.println("");
+		System.out.println("My ip %s and my name %s".formatted(myIP, myHostName));
 
-		// get the InetAddress for a String representation of an IP address
-		Address = InetAddress.getByName("192.168.1.12");
-		// print the address of the website
-		System.out.println("localhost InetAddress: " + Address); // loopback
+		// get InetAddress from name
 
-		System.out.println("");
+		InetAddress queryByHostNameAddress = InetAddress.getByName(myHostName);
+		System.out.println(queryByHostNameAddress);
 
-		// find the IP address of a website
-		Address = InetAddress.getByName("java.com");
+		// get InetAddress from ip
+		InetAddress queryByHostIPAddress = InetAddress.getByName(myIP);
+		System.out.println(queryByHostIPAddress);
 
-		// print the address of the website
-		System.out.println("java.com InetAddress: " + Address);
+		// get InetAddress from webpage name
+		InetAddress queryByWebsiteAddress = InetAddress.getByName("google.com");
+		System.out.println(queryByWebsiteAddress);
 
-		System.out.println("");
+		// get all addresses of server
 
-		// get all IP address of a website
-		InetAddress addresses[] = InetAddress.getAllByName("www.google.com");
-		for (int i = 0; i < addresses.length; i++)
-			System.out.println(addresses[i]);
+		InetAddress[] addresses = InetAddress.getAllByName("google.com");
+		System.out.println(Arrays.toString(addresses));
+
+		// loopback address
+
+		InetAddress myLoop = InetAddress.getLoopbackAddress();
+		System.out.println(myLoop);
+
 	}
+
 }

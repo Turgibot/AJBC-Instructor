@@ -36,6 +36,8 @@ public class Runner {
 
 		multiplySerial();
 		long end1 = System.nanoTime();
+		
+//		printMatrix(Cserial);
 
 		System.out.println("Serial Execution time = " + (end1 - start1));
 
@@ -45,13 +47,13 @@ public class Runner {
 		long end2 = System.nanoTime();
 
 		System.out.println("Parallel Execution time = " + (end2 - start2));
-//		checkResult();
-//
+		checkResult();
+
 //		printMatrix(C);
 	}
 
 	static void multiplyParallel() throws InterruptedException {
-		ExecutorService threadPool = Executors.newWorkStealingPool(8);
+		ExecutorService threadPool = Executors.newCachedThreadPool();
 
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
@@ -108,6 +110,7 @@ public class Runner {
 			for (int j = 0; j < N; j++) {
 				if (C[i][j] != Cserial[i][j]) {
 					System.out.println("Incorrect!");
+					return;
 				}
 			}
 		}

@@ -33,7 +33,7 @@ public class Runner {
 			String line = sc.nextLine().toLowerCase();
 			futures.add(executorService.submit(() -> {
 				int counter = 0;
-				for (String word : line.split(" ")) {
+				for (String word : line.replace('\"', ' ').split(" ")) {
 					if (word.equals("java"))
 						counter++;
 				}
@@ -49,10 +49,9 @@ public class Runner {
 
 		System.out.println(sum);
 
-	
-
 		executorService.shutdown();
 		executorService.awaitTermination(2, TimeUnit.SECONDS);
 
 	}
+
 }
