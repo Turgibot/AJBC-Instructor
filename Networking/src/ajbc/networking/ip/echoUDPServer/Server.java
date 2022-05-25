@@ -6,13 +6,13 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 
-public class UDPServer {
+public class Server {
 	private final int INPUT_BUFFER_SIZE = 1024;
 	private final int OUTPUT_BUFFER_SIZE = 1024;
 	private DatagramSocket serverSocket;
 	private int serverPort;
 
-	public UDPServer(int serverPort) throws SocketException {
+	public Server(int serverPort) throws SocketException {
 		this.serverPort = serverPort;
 		serverSocket = new DatagramSocket(serverPort);
 		System.out.println("[UDP Server] Datagram Socket started on port " + serverPort);
@@ -45,7 +45,7 @@ public class UDPServer {
 
 	public static void main(String[] args) throws IOException {
 		int port = 5555;
-		UDPServer server = new UDPServer(port);
+		Server server = new Server(port);
 		server.echoData();
 	}
 }

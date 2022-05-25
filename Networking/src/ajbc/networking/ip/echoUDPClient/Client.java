@@ -8,7 +8,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class UDPClient {
+public class Client {
 
 	private InetAddress localInetAddress;
 	private InetAddress serverInetAddress;
@@ -19,7 +19,7 @@ public class UDPClient {
 	private Scanner sc;
 	private final int INPUT_BUFFER_SIZE = 1024;
 
-	public UDPClient(String serverName, int serverPort, int localPort) throws SocketException, UnknownHostException {
+	public Client(String serverName, int serverPort, int localPort) throws SocketException, UnknownHostException {
 		this.localPort = localPort;
 		this.serverName = serverName;
 		this.serverPort = serverPort;
@@ -78,7 +78,7 @@ public class UDPClient {
 		String serverName = "localHost";
 		int serverPort = 5555;
 		int localPort = 5554;
-		UDPClient client = new UDPClient(serverName, serverPort, localPort);
+		Client client = new Client(serverName, serverPort, localPort);
 		client.receiveData();
 		client.sendData();
 	}
