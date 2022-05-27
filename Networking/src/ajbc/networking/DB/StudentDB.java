@@ -5,9 +5,6 @@ import java.util.Map;
 
 public class StudentDB {
 	private final static Map<Long, Student> students = new HashMap<>() {
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 4702429001951694294L;
 
 		{
