@@ -1,4 +1,4 @@
-package ajbc.networking.ip.game.server;
+package ajbc.networking.game.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

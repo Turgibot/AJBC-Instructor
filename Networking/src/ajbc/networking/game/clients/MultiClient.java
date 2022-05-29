@@ -19,7 +19,7 @@ public class MultiClient {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		ExecutorService clientsService = Executors.newFixedThreadPool(NUM_PLAYERS);
-		CountDownLatch latch = new CountDownLatch(NUM_PLAYERS-1);
+		CountDownLatch latch = new CountDownLatch(NUM_PLAYERS);
 		for (int i = 0; i < NUM_PLAYERS; i++) {
 			clientsService.execute(new Player(i, latch));
 		}
@@ -42,6 +42,7 @@ public class MultiClient {
 
 			try {
 				latch.countDown();
+				latch.await();
 				clientSocket = new Socket(SERVER_NAME, SERVER_PORT);
 				System.out.println("Connected to server");
 
@@ -67,6 +68,8 @@ public class MultiClient {
 				e.printStackTrace();
 			} catch (IOException e) {
 				System.err.println("Socket failed");
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} finally {
 				if (clientSocket != null)
